@@ -1,8 +1,13 @@
-import Image from "next/image";
 import Nav from "./components/Nav";
+import Header from "./components/Header";
+import Home from "./pages/Home";
 
-export default function Home() {
+export default function Page() {
   return(
-    <Nav/>
+    <>
+      <Nav/>
+      <Header src='/burgerHome.png' alt='header page home'/>
+      <Home/>
+    </>
   )
 }
