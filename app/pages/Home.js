@@ -25,7 +25,7 @@ export default function Home(){
                 <Image src='/CATEGORIAS.png' alt='categorias' width={412} height={71}/>
                 <h1>categorias</h1>
             </section>
-            <section className='flex flex-col items-center'>
+            <section className='flex flex-col items-center bg-[#fff] w-full'>
                 <Image src='/OFERTAS.png' alt='categorias' width={273} height={65}/> 
                 <h1>ofertas</h1>
             </section>
