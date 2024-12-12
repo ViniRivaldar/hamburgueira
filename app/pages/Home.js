@@ -27,7 +27,7 @@ export default function Home(){
     return(
         <main className='flex items-center flex-col'>
             <section className='flex items-center flex-col'>
-                <Image src='/CATEGORIAS.png' alt='categorias' width={412} height={71} className='mt-14'/>
+                <Image src='/CATEGORIAS.png' alt='categorias' width={412} height={71} className='my-14'/>
                 {categories.length > 0 && (
                     <CarouselCategory items={categories} />
                 )}
