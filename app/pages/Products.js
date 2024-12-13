@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 
 import axios from '../../utils/AxiosConfig'
 import Image from 'next/image';
+import Link from 'next/link';
 import SkeletonProducts from '../components/skeletonProducts';
 
 export default function Products() {
@@ -86,9 +87,9 @@ export default function Products() {
                             <div className="mt-5">
                                 <p className="text-black font-roboto text-base font-normal">{product.name}</p>
                                 <p className="mt-4 font-bold">R$ {product.price.toFixed(2)}</p>
-                                <button className="w-[156px] h-[36px] bg-[#9758A6] text-white rounded-full px-4 py-2 mt-4">
-                                    Carrinho
-                                </button>
+                                <Link href={`/produto/${product.id}`}>
+                                    <button className="w-[156px] h-[36px] bg-[#9758A6] text-white rounded-full px-4 py-2 mt-4">Saiba mais</button>
+                                </Link>
                             </div>
                         </div>
                     ))}
