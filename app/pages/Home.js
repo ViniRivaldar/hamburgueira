@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import axios from '../../utils/AxiosConfig';
 import Carousel from '../components/CarrouselProducts';
 import CarouselCategory from "../components/CarrouselCategory";
-import Skeleton from '../components/Skeleton';
+import Skeleton from '../components/SkeletonHome';
 
 export default function Home() {
     const [categories, setCategories] = useState([]);

@@ -2,22 +2,30 @@
 import { useState, useEffect } from 'react'
 
 import axios from '../../utils/AxiosConfig'
+import Image from 'next/image';
+import SkeletonProducts from '../components/skeletonProducts';
 
-export default function Products(){
-    const[products,setProducts]= useState([])
+export default function Products() {
+    const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('Todos');
+    const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(()=>{
-        const fecthProdutos = async ()=> {
-            const response = await axios.get('/products')
-        
-            setProducts(response.data)
-            setFilteredProducts(response.data)
-        }
+    useEffect(() => {
+        const fetchProdutos = async () => {
+            try {
+                const response = await axios.get('/products');
+                setProducts(response.data);
+                setFilteredProducts(response.data);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
 
-        fecthProdutos()
-    },[])
+        fetchProdutos();
+    }, []);
 
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);
@@ -30,9 +38,13 @@ export default function Products(){
         }
     };
 
-    return(
+    if (isLoading) {
+        return <SkeletonProducts />;
+    }
+
+    return (
         <main>
-           <section className="m-5">
+            <section className="m-5">
                 <ul className="flex gap-20 justify-center">
                     <li
                         className={`cursor-pointer hover:text-[#9758A6] hover:border-b-2 hover:border-[#9758A6] ${
@@ -56,18 +68,32 @@ export default function Products(){
                 </ul>
             </section>
 
-            <section className="m-5">
-                <h1 className="text-2xl font-bold mb-5">Produtos</h1>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <section className="flex justify-center m-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
                     {filteredProducts.map((product) => (
-                        <div key={product.id} className="p-4 border rounded-lg shadow-md">
-                            <h2 className="text-lg font-semibold">{product.name}</h2>
-                            <p className="text-sm text-gray-600">{product.description}</p>
-                            <p className="text-[#9758A6] font-bold">R$ {product.price.toFixed(2)}</p>
+                        <div
+                            key={product.id}
+                            className="flex gap-3 w-[350px] h-[202px] p-5 rounded-[30px] bg-white shadow-[0px_30px_60px_0px_rgba(57,57,57,0.10)]"
+                        >
+                            <div className="w-1/2 flex items-center justify-center">
+                                <Image
+                                    src={product.foto_products[0].url}
+                                    alt={product.name}
+                                    width={300}
+                                    height={200}
+                                />
+                            </div>
+                            <div className="mt-5">
+                                <p className="text-black font-roboto text-base font-normal">{product.name}</p>
+                                <p className="mt-4 font-bold">R$ {product.price.toFixed(2)}</p>
+                                <button className="w-[156px] h-[36px] bg-[#9758A6] text-white rounded-full px-4 py-2 mt-4">
+                                    Carrinho
+                                </button>
+                            </div>
                         </div>
                     ))}
                 </div>
             </section>
         </main>
-    )
+    );
 }
