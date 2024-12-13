@@ -88,7 +88,7 @@ export default function Products() {
                                 <p className="text-black font-roboto text-base font-normal">{product.name}</p>
                                 <p className="mt-4 font-bold">R$ {product.price.toFixed(2)}</p>
                                 <Link href={`/produto/${product.id}`}>
-                                    <button className="w-[156px] h-[36px] bg-[#9758A6] text-white rounded-full px-4 py-2 mt-4">Saiba mais</button>
+                                    <button className="w-[156px] h-[36px] bg-[#9758A6] hover:bg-[#804686] text-white rounded-full px-4 py-2 mt-4">Saiba mais</button>
                                 </Link>
                             </div>
                         </div>
