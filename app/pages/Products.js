@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import axios from '../../utils/AxiosConfig'
 import Image from 'next/image';
 import Link from 'next/link';
-import SkeletonProducts from '../components/skeletonProducts';
+import SkeletonProducts from '../components/loadings/skeletonProducts';
 
 export default function Products() {
     const [products, setProducts] = useState([]);
