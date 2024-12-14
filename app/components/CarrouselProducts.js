@@ -50,7 +50,7 @@ const Carousel = ({ items }) => {
               href={`/produto/${product.id}`} 
               className="px-[48px] py-[21px] text-[24px] bg-[#9758A6] text-white rounded-md hover:bg-[#804686] transition w-[282.793px] text-center mb-14"
             >
-              Peça agora
+              Saiba mais 
             </Link>
           </div>
         </SwiperSlide>
