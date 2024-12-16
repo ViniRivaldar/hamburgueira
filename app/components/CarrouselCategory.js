@@ -33,7 +33,7 @@ const Carousel = ({ items }) => {
               </div>
             )}
             <Link
-              href={`/categoria/${category.name}`} 
+              href={`/categoria/${category.id}`} 
               className="px-[48px] py-[21px] text-[24px] bg-[#9758A6] text-white rounded-md hover:bg-[#804686] transition w-[282.793px] text-center mb-14"
             >
               {category.name}

@@ -22,12 +22,11 @@ export default function Product({items}){
 
                     <div className="flex flex-col">
                         <p className="font-bold">{produto.name}</p>
-                        <p className="mt-10"><span className="font-bold">Descrição: </span>{produto.description}</p>
+                        <span className="font-bold mt-10">Descrição: </span>
+                        <p className="mt-3">{produto.description}</p>
                         <div className="mt-32">
                             <p className="font-bold mb-5 ml-3">{formatarPreco(produto.price)}</p>
-                            <Link href="/carrinho">
-                                <button className="mt-1 w-[200px] h-[50px] bg-[#9758A6] hover:bg-[#804686] text-white rounded-full px-4 py-2">Adicionar ao carrinho</button>
-                            </Link>
+                            <button className="mt-1 w-[200px] h-[50px] bg-[#9758A6] hover:bg-[#804686] text-white rounded-full px-4 py-2">Adicionar ao carrinho</button>
                         </div>
                     </div>
                 </div>
