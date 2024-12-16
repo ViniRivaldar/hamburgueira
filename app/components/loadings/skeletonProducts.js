@@ -2,7 +2,6 @@ export default function SkeletonProducts() {
     return (
         <main className="animate-pulse">
             <section className="m-5">
-                {/* Loading skeleton para as categorias */}
                 <ul className="flex gap-20 justify-center">
                     {Array.from({ length: 5 }).map((_, index) => (
                         <li
@@ -14,7 +13,6 @@ export default function SkeletonProducts() {
             </section>
 
             <section className="flex justify-center m-5">
-                {/* Loading skeleton para os produtos */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
                     {Array.from({ length: 6 }).map((_, index) => (
                         <div
