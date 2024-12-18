@@ -1,79 +1,120 @@
 'use client'
 
 import { useForm } from 'react-hook-form';
+import { AxiosAuth } from '../../utils/AxiosConfig'
+import { toast, ToastContainer } from 'react-toastify';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import 'react-toastify/dist/ReactToastify.css';
 
-import{AxiosAuth} from '../../utils/AxiosConfig'
-
-export default function FormRegister(){
+export default function FormRegister() {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const router = useRouter();
 
     const onSubmit = async (data) => {
         try {
             const response = await AxiosAuth.post('/register', data);
-            console.log('Cadastro realizado com sucesso:', response.data);
-        }catch(e){
-            console.error('Erro ao realizar o cadastro:', e)
+            toast.success('Cadastro realizado com sucesso!');
+            setTimeout(() => {
+                router.push('/login');
+            }, 2000);
+        } catch (e) {
+            if (e.response?.data?.errors) {
+                e.response.data.errors.forEach(errorMessage => {
+                    if (errorMessage.includes('Senha')) {
+                        setError('password', {
+                            type: 'manual',
+                            message: errorMessage
+                        });
+                    }
+                });
+            } else {
+                toast.error('Erro ao realizar o cadastro. Tente novamente.');
+            }
         }
     }
 
-    return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <h1>Cadastre-se</h1>
+    useEffect(() => {
+        Object.keys(errors).forEach(key => {
+            if (errors[key]?.message) {
+                toast.error(errors[key].message);
+            }
+        });
+    }, [errors]);
 
-            <label> Nome:
+    return (
+        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col items-center gap-4'>
+            <div className='text-white flex flex-col'>
+                <span>Nome:</span>
                 <input
                     type="text"
-                    placeholder="digite o nome"
                     {...register('name', { required: 'Nome é obrigatório' })}
+                    className={`w-[391.416px] h-[30px] rounded-[5px] text-black ${errors.name ? 'border-2 border-red-500 focus:border-red-500 focus:ring-red-500' : 'border border-gray-300'}`}
                 />
-                {errors.name && <span>{errors.name.message}</span>}
-            </label>
-            <label> Username:
+            </div>
+
+            <div className='text-white flex flex-col'>
+                <span>Username:</span>
                 <input
                     type="text"
-                    placeholder="digite o Username"
                     {...register('username', { required: 'Username é obrigatório' })}
+                    className={`w-[391.416px] h-[30px] rounded-[5px] text-black ${errors.username ? 'border-2 border-red-500' : ''}`}
                 />
-                {errors.username && <span>{errors.username.message}</span>}
-            </label>
-            <label> Email:
+            </div>
+
+            <div className='text-white flex flex-col'>
+                <span>Email:</span>
                 <input
-                    type="Email"
-                    placeholder="digite o Email"
-                    {...register('email', { 
-                        required: 'Email é obrigatório', 
+                    type="email"
+                    {...register('email', {
+                        required: 'Email é obrigatório',
                         pattern: {
-                          value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                          message: 'Formato de email inválido',
+                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                            message: 'Formato de email inválido',
                         }
                     })}
+                    className={`w-[391.416px] h-[30px] rounded-[5px] text-black ${errors.email ? 'border-2 border-red-500' : ''}`}
                 />
-                 {errors.email && <span>{errors.email.message}</span>}
-            </label>
-            <label> Senha:
+            </div>
+
+            <div className='text-white flex flex-col'>
+                <span>Senha:</span>
                 <input
                     type="password"
-                    placeholder="digite a senha"
-                    {...register('password', { required: 'Senha é obrigatória' })}
-                />
-                {errors.password && <span>{errors.password.message}</span>}
-            </label>
-            <label> WhatsApp:
-                <input
-                    type="text"
-                    placeholder="digite o telefone"
-                    {...register('phone_number', { 
-                        required: 'Telefone é obrigatório',
-                        pattern: {
-                          value: /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/,
-                          message: 'Formato de telefone inválido',
+                    {...register('password', { 
+                        required: 'Senha é obrigatória',
+                        minLength: {
+                            value: 5,
+                            message: 'Senha precisa ter pelo menos 5 caracteres'
+                        }, 
+                        maxLength:{
+                            value: 10,
+                            message: 'Senha atingiu o numero máximo'
                         }
                     })}
+                    className={`w-[391.416px] h-[30px] rounded-[5px] text-black ${errors.password ? 'border-2 border-red-500' : ''}`}
                 />
-                {errors.phone_number && <span>{errors.phone_number.message}</span>}
-            </label>
+            </div>
 
-            <button type="submit">Cadastrar</button>
+            <div className='text-white flex flex-col'>
+                <span>WhatsApp:</span>
+                <input
+                    type="text"
+                    {...register('phone_number', {
+                        required: 'Telefone é obrigatório',
+                        pattern: {
+                            value: /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/,
+                            message: 'Formato de telefone inválido',
+                        }
+                    })}
+                    className={`w-[391.416px] h-[30px] rounded-[5px] text-black ${errors.phone_number ? 'border-2 border-red-500' : ''}`}
+                />
+            </div>
+
+            <button type="submit" className='w-[182.81px] h-[36.129px] bg-[#9758A6] rounded-full mt-[10] mr-[208.61px] text-white text-[16px]'>
+                Sign Up
+            </button>
+            <ToastContainer />
         </form>
     )
 }
