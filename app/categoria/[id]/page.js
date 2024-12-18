@@ -1,7 +1,7 @@
 'use client'
 
 import Nav from "@/app/components/Nav"
-import Axios from "@/utils/AxiosConfig"
+import {AxiosProducts} from "@/utils/AxiosConfig"
 import { useState, useEffect } from "react"
 import { useParams } from 'next/navigation'
 import Image from "next/image"
@@ -18,7 +18,7 @@ export default function Categoria() {
 
     useEffect(() => {
         const fetchCategory = async () => {
-            const response = await Axios.get('/category')
+            const response = await AxiosProducts.get('/category')
             setCategorias(response.data)
 
             const categoriaEncontrada = response.data.find(categoria => categoria.id === id)
@@ -30,7 +30,7 @@ export default function Categoria() {
         }
 
         const fetchData = async () => {
-            const response = await Axios.get('/products')
+            const response = await AxiosProducts.get('/products')
             setProducts(response.data)
             setLoading(false)
         }

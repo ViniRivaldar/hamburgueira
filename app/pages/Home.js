@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-import axios from '../../utils/AxiosConfig';
+import {AxiosProducts} from '../../utils/AxiosConfig';
 import Carousel from '../components/CarrouselProducts';
 import CarouselCategory from "../components/CarrouselCategory";
 import Skeleton from '../components/loadings/SkeletonHome';
@@ -14,13 +14,13 @@ export default function Home() {
 
     useEffect(() => {
         const fetchCategories = async () => {
-            const category = await axios.get('/category');
+            const category = await AxiosProducts.get('/category');
             setCategories(category.data);
             setLoading(false)
         };
 
         const fetchProducts = async () => {
-            const produtos = await axios.get('/products');
+            const produtos = await AxiosProducts.get('/products');
             setProducts(produtos.data);
             setLoading(false)
         };

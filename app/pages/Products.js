@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 
-import axios from '../../utils/AxiosConfig'
+import {AxiosProducts} from '../../utils/AxiosConfig'
 import Image from 'next/image';
 import Link from 'next/link';
 import SkeletonProducts from '../components/loadings/skeletonProducts';
@@ -15,7 +15,7 @@ export default function Products() {
     useEffect(() => {
         const fetchProdutos = async () => {
             try {
-                const response = await axios.get('/products');
+                const response = await AxiosProducts.get('/products');
                 setProducts(response.data);
                 setFilteredProducts(response.data);
             } catch (error) {

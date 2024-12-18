@@ -4,7 +4,7 @@ import Nav from "@/app/components/Nav"
 import Header from "@/app/components/Header"
 import Product from '@/app/pages/Product'
 import { useEffect, useState } from "react"
-import Axios from "@/utils/AxiosConfig"
+import {AxiosProducts} from "@/utils/AxiosConfig"
 import { use } from "react"
 import SkeletonProduto from "@/app/components/loadings/SkeletonPronduto"
 
@@ -16,7 +16,7 @@ export default function Produto({params}){
 
     useEffect(()=>{
         const fetchProdutos = async ()=>{
-            const response = await (Axios.get(`/products/${id}`))
+            const response = await (AxiosProducts.get(`/products/${id}`))
             console.log(response.data)
             setProduto(response.data)
             setLoading(false)
