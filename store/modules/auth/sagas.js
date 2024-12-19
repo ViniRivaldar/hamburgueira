@@ -1,6 +1,7 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { AxiosAuth } from '../../../utils/AxiosConfig';
 import * as authActions from './actions';
+import { get } from 'lodash';
 import { toast } from 'react-toastify';
 
 function* loginSaga(action) {
@@ -8,12 +9,11 @@ function* loginSaga(action) {
     const response = yield call(AxiosAuth.post, '/login', action.payload);
     const { user, token } = response.data;
     
-    // Para debug
-    console.log('Response data:', response.data);
-    
     yield put(authActions.loginSuccess(user, token));
+
+    AxiosAuth.defaults.headers.Authorization = `Bearer ${token}`;
   } catch (e) {
-    console.error('Login error:', e); // Para debug
+    console.error('Login error:', e);
     
     if (e.response?.data?.errors) {
       e.response.data.errors.forEach(errorMessage => {
@@ -28,8 +28,15 @@ function* loginSaga(action) {
   }
 }
 
+function persistRehydrate({payload}){
+  const token = get(payload, 'auth.token', '')
+  if(!token) return
+  AxiosAuth.defaults.headers.Authorization = `Bearer ${token}`
+}
+
 function* watchLoginSaga() {
   yield takeLatest('auth/loginRequest', loginSaga);
+  yield takeLatest('auth/loginRequest', persistRehydrate);
 }
 
 export default watchLoginSaga;

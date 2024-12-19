@@ -36,7 +36,6 @@ export default function FormLogin() {
     const onSubmit = async (data) => {
         try {
             dispatch(authActions.loginRequest(data));
-            console.log('Tentativa de login iniciada:', data);
         } catch (error) {
             console.error('Erro ao fazer login:', error);
             toast.error('Erro ao tentar fazer login');
