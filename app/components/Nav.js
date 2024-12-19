@@ -1,10 +1,19 @@
 'use client'
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'; 
-import { FaUser,FaShoppingCart } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import { FaUser,FaShoppingCart,FaSignOutAlt } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux';
+
+import * as authActions from '../../store/modules/auth/actions'
 
 export default function Nav() {
+    const dispatch = useDispatch()
+    const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
+    const user = useSelector(state=> state.auth.user)
+
+    const handleLogout = () => {
+        dispatch(authActions.logout());
+    };
 
     const pathname = usePathname();
 
@@ -26,14 +35,27 @@ export default function Nav() {
             </div>
             
             <div className="flex space-x-4 mr-14 pr-14">
-                
-                <FaShoppingCart className=' text-[#9758A6] cursor-pointer w-[30px]'/>
-                <Link 
-                    href="/login" 
-                    className={`text-[#9758A6]`}
-                >
-                    <FaUser className='w-[30px]'/>
-                </Link>
+            {isLoggedIn ? (
+                    <>
+                        <div className='flex items-center gap-3'>
+                            <FaShoppingCart className="text-[#9758A6] cursor-pointer w-[30px]" />
+                            <button onClick={handleLogout} className="text-[#9758A6] cursor-pointer">
+                                <FaSignOutAlt className="w-[30px]" />
+                            </button>
+                        </div>
+                        <div className='flex flex-col'>
+                            <span className='text-[#555]'>{`Seja bem vindo ${user.username}`}</span>
+                            <Link href='/register' className='text-[#9758A6]'>Perfil</Link>
+                        </div>
+                    </>
+                ) : (
+                    <Link
+                        href="/login"
+                        className={`text-[#9758A6]`}
+                    >
+                        <FaUser className="w-[30px]" />
+                    </Link>
+                )}
             </div>
         </nav>
 
