@@ -39,10 +39,9 @@ export default function FormUser() {
                 toast.success('Perfil atualizado com sucesso!');
 
                 dispatch(authActions.logout())
+                
+                router.push('/login');
 
-                setTimeout(() => {
-                    router.push('/');
-                }, 2000);
             } else {
                 await AxiosAuth.post('/register', data);
                 toast.success('Cadastro realizado com sucesso!');
