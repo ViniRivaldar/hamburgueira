@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation'; 
 import { FaUser,FaShoppingCart } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 export default function Nav() {
 
