@@ -1,22 +1,18 @@
-import * as types from '../types';
+export const loginRequest = (credentials) => ({
+  type: 'auth/loginRequest',
+  payload: credentials,
+});
 
-export function loginRequest(data) {
-  return {
-    type: types.LOGIN_REQUEST,
-    payload: data,
-  };
-}
+export const loginSuccess = (user, token) => ({
+  type: 'auth/loginSuccess',
+  payload: { user, token },
+});
 
-export function loginSuccess(user, token) {
-  return {
-    type: types.LOGIN_SUCCESS,
-    payload: { user, token },
-  };
-}
+export const loginFailure = (error) => ({
+  type: 'auth/loginFailure',
+  payload: error,
+});
 
-export function loginFailure(error) {
-  return {
-    type: types.LOGIN_FAILURE,
-    payload: error,
-  };
-}
+export const logout = () => ({
+  type: 'auth/logout'
+});
