@@ -1,7 +1,12 @@
 import Image from "next/image"
-import Link from "next/link"
+import { useSelector } from "react-redux"
+import { useState } from "react";
+
+import ModalLogin from "../components/ModalLogin";
 
 export default function Product({items}){
+    const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     if (!Array.isArray(items)) {
         items = [items]; 
@@ -13,6 +18,7 @@ export default function Product({items}){
             currency: 'BRL',
         });
     }
+
 
     return (
         <main className="flex justify-center items-center mt-5">
@@ -26,11 +32,27 @@ export default function Product({items}){
                         <p className="mt-3">{produto.description}</p>
                         <div className="mt-32">
                             <p className="font-bold mb-5 ml-3">{formatarPreco(produto.price)}</p>
-                            <button className="mt-1 w-[200px] h-[50px] bg-[#9758A6] hover:bg-[#804686] text-white rounded-full px-4 py-2">Adicionar ao carrinho</button>
+                            {isLoggedIn ?(
+                                <>
+                                    <button className="mt-1 w-[200px] h-[50px] bg-[#9758A6] hover:bg-[#804686] text-white rounded-full px-4 py-2">Adicionar ao carrinho</button>
+                                </>
+                            ):(
+                                <p 
+                                    className="text-black mb-5 ml-3 cursor-pointer hover:text-[#804686] underline" 
+                                    onClick={()=>setIsModalOpen(true)}
+                                >
+                                    Entrar para continuar
+                                </p>
+
+                            )}
+                            
+                           
                         </div>
                     </div>
                 </div>
             ))}
+
+            {isModalOpen && <ModalLogin toggleModal={() => setIsModalOpen(!isModalOpen)} />}
         </main>
     )
 }
