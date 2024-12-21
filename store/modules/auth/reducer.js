@@ -33,6 +33,26 @@ const reducer = (state = initialState, action) => {
       return {
         ...initialState
       };
+    
+    case '@auth/UPDATE_PROFILE_REQUEST':
+      return {
+        ...state,
+        isUpdating: true,
+        error: null
+      };
+    case '@auth/UPDATE_PROFILE_SUCCESS':
+      return {
+        ...state,
+        user: action.payload.user,
+        isUpdating: false,
+        error: null
+      };
+      case '@auth/UPDATE_PROFILE_FAILURE':
+        return {
+          ...state,
+          isUpdating: false,
+          error: action.payload
+        };
     default:
       return state;
   }

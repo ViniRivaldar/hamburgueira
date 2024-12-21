@@ -16,3 +16,18 @@ export const loginFailure = (error) => ({
 export const logout = () => ({
   type: 'auth/logout'
 });
+
+export const updateProfileRequest = (userData) => ({
+  type: '@auth/UPDATE_PROFILE_REQUEST',
+  payload: userData,
+});
+
+export const updateProfileSuccess = (user) => ({
+  type: '@auth/UPDATE_PROFILE_SUCCESS',
+  payload: { user }
+});
+
+export const updateProfileFailure = (error) => ({
+  type: '@auth/UPDATE_PROFILE_FAILURE',
+  payload: error,
+});

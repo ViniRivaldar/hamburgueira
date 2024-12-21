@@ -31,16 +31,10 @@ export default function FormUser() {
     const onSubmit = async (data) => {
         try {
             if (isLoggedIn) {
-                await AxiosAuth.put(`/register/${user.id}`, data,{
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                toast.success('Perfil atualizado com sucesso!');
-
-                dispatch(authActions.logout())
-                
-                router.push('/login');
+                dispatch(authActions.updateProfileRequest({ ...data, id: user.id }));
+                setTimeout(()=>{
+                    router.push('/');
+                },2000)
 
             } else {
                 await AxiosAuth.post('/register', data);
