@@ -1,6 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Head from "next/head";
+
 import Provider  from './components/ClientProvider'
 
 const geistSans = Geist({
@@ -21,17 +21,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="PT-br">
-      <Head>
-        
-        <link
-          rel="preload"
-          href="https://fonts.googleapis.com/css2?family=Geist:wght@400&family=Geist+Mono:wght@400&display=swap"
-          as="font"
-          type="font/woff2"
-          crossorigin="anonymous"
-        />
-      </Head>
-      <body className="vsc-initialized">
+      <body className={`${geistSans.variable} ${geistMono.variable} vsc-initialized`}>
         <Provider>
           {children}
         </Provider>
